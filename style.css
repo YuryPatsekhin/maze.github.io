@@ -41,6 +41,12 @@ body {
     background-color: black;
 }
 
+.entry {
+    width: 25px;
+    height: 25px;
+    background-color: red;
+}
+
 .character {
     width: 25px;
     height: 25px;

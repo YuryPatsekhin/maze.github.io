@@ -2,14 +2,18 @@
 
 let WALL;
 let CELL;
+let ENTRY;
+let EXIT;
 let height;
 let width;
 let listOfCells;
 let countOfUnvisitedCells;
 
 const setInitialValues = () => {
-    WALL = 1;
     CELL = 0;
+    WALL = 1;
+    ENTRY = 2;
+    EXIT = 3;
     height = 21;
     width = 21;
     listOfCells = [];
@@ -17,7 +21,7 @@ const setInitialValues = () => {
 }
 
 const generateBasisOfMaze = (height, width) => {
-    const countOfCellsInRow  = width;
+    const countOfCellsInRow = width;
     const generatedBasisOfMaze = new Array;
 
     while (height > 0) {
@@ -72,7 +76,7 @@ const getNeighbors = (cell) => {
 const getRandomNeighbor = (neighbors) => {
     const countOfNeighbors = neighbors.length;
     const minValue = 1;
-    let rand = Math.round(minValue - 0.5 + Math.random() * (countOfNeighbors - minValue + 1));
+    const rand = Math.round(minValue - 0.5 + Math.random() * (countOfNeighbors - minValue + 1));
 
     return neighbors[rand - 1];
 }
@@ -89,6 +93,7 @@ const breakTheWall = (firstCell, secondCell, basis) => {
 
     const height = coordinateOfWall.x;
     const positionOnRow = coordinateOfWall.y
+    listOfCells.push({ x: coordinateOfWall.x, y: coordinateOfWall.y, visited: true })
 
     basis[height].splice(positionOnRow, 1, 0);
 
@@ -129,6 +134,27 @@ const generateMaze = (height, width) => {
     return basis;
 };
 
+const getRandomCell = () => {
+    const minValue = 0;
+    const rand = Math.round(minValue - 0.5 + Math.random() * (listOfCells.length - 1 - minValue + 1));
+
+    return listOfCells[rand];
+}
+
+const generateEntry = (maze) => {
+    const randomCell = getRandomCell();
+
+    maze[randomCell.x].splice(randomCell.y, 1, ENTRY);
+    return;
+}
+
+const generateExit = (maze) => {
+    const randomCell = getRandomCell();
+
+    maze[randomCell.x].splice(randomCell.y, 1, EXIT);
+    return;
+}
+
 const drawMaze = (generatedMaze) => {
     const maze = document.querySelector('.maze');
 
@@ -143,6 +169,16 @@ const drawMaze = (generatedMaze) => {
 
                 wall.classList.add('wall');
                 row.appendChild(wall);
+            } else if (cell === ENTRY) {
+                const entry = document.createElement('div');
+
+                entry.classList.add('entry');
+                row.appendChild(entry);
+            } else if (cell === EXIT) {
+                const exit = document.createElement('div');
+
+                exit.classList.add('exit');
+                row.appendChild(exit);
             } else {
                 const space = document.createElement('div');
 
@@ -155,9 +191,12 @@ const drawMaze = (generatedMaze) => {
 };
 
 const createMaze = () => {
-    setInitialValues();
+    let generatedMaze;
 
-    const generatedMaze = generateMaze(height, width);
+    setInitialValues();
+    generatedMaze = generateMaze(height, width);
+    generateEntry(generatedMaze);
+    generateExit(generatedMaze);
     drawMaze(generatedMaze);
 }
 
