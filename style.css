@@ -8,11 +8,17 @@ body {
     margin-top: 20px;
 }
 
-.generate {
+.buttons {
+    display: flex;
+    justify-content: center;
     margin: auto;
-    display: block;
+}
+
+.button {
+    margin: 0px 10px;
+    display: inline-block;
     margin-top: 100px;
-    width: 300px;
+    width: 150px;
     height: 50px;
     border-radius: 100px;
     font-size: 32px;
@@ -22,11 +28,11 @@ body {
     outline: none;
 }
 
-.generate:hover {
+.button:hover {
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-.generate:active {
+.button:active {
     box-shadow: none;
 }
 
@@ -42,8 +48,22 @@ body {
 }
 
 .entry {
-    width: 25px;
-    height: 25px;
+    height: 40px;
+    border-radius: 100px;
+    width: 40px;
+    position: absolute;
+    z-index: 1;
+    left: -7px;
+    top: -10px;
+    background-color: red;
+}
+
+.road {
+    height: 5px;
+    width: 5px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
     background-color: red;
 }
 
@@ -54,12 +74,18 @@ body {
 }
 
 .exit {
-    width: 25px;
-    height: 25px;
+    height: 40px;
+    border-radius: 100px;
+    width: 40px;
+    position: absolute;
+    z-index: 1;
+    left: -7px;
+    top: -10px;
     background-color: blue;
 }
 
 .space {
+    position: relative;
     width: 25px;
     height: 25px;
     background-color: white;
